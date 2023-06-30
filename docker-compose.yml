@@ -1,0 +1,37 @@
+version: '3.0'
+services:
+  server:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    volumes:
+      - ./src/:/src/
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+
+# Postgresql 
+################### 以下追加　###################
+  db:
+    image: postgres:14.4-alpine
+    container_name: Incident_DB
+    # コンテナが落ちたら、再起動する。
+    restart: always
+    # image作成時の初期設定の値を設定する
+    environment:  
+        ENV LANG: ja_JP.UTF-8        # postgres内の文字コードを指定
+        TZ: Asia/Tokyo               # postgres内のTimeZoneを指定
+        POSTGRES_DB: Incident_DB     # postgres内のDB名を指定
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+    # Postgresに接続するためのポート（外部からのアクセス時のポート：docker内部からのアクセス時のポート）
+    ports: 
+        - "5437:5432"
+    volumes:
+      - ./script:/docker-entrypoint-initdb.d    # 追加(scriptフォルダ内にあるスクリプトを実行する。)
+      - db-store:/var/lib/postgresql/data       # DBデータ永続化
+
+# DBデータ永続化
+volumes:
+  db-store:
+
