@@ -1,5 +1,5 @@
 # pythonのTags名を指定。
-FROM python:3.10-alpine3.15
+FROM python:3.11.4-alpine3.18
 
 WORKDIR /backend
 

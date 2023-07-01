@@ -14,3 +14,9 @@ passlib[bcrypt]==1.7.4
 fastapi_csrf_protect==0.3.0
 
 dnspython==2.1.0
+
+# UnitTest
+pytest==7.4.0
+httpx==0.24.0
+pytest-cov==4.1.0
+pytest-asyncio==0.21.0
