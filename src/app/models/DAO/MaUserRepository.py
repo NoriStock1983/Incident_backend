@@ -37,3 +37,33 @@ class MaUserRepository():
             logging.info("End select_all_mauser.")
 
         return all_mauser
+    
+    # MA_CODEの内容をIDで取得する。
+    def select_by_mauser_cd(usercd: str):
+        logging.info("Start select_all_macode.")
+        # DBへのアクセス
+        con = DBAccess.connect_database()
+        # 取得したデータを格納する変数を定義する。
+        macode = List[MA_USERBase]
+        macode = []
+
+
+        query = text("SELECT * FROM MA_CODE WHERE code_1 = :codecd")
+        logging.info(query.text)
+
+        try:
+            rows = con.execute(query, usercd=usercd)
+
+            for row in rows:
+                macode.append(row)
+            
+        except Exception as err:
+            logging.error("Error: ", err)
+
+        finally:
+            logging.info("Close DB Access.")
+            DBAccess.close_connect_database(con)
+            logging.info("End select_all_macode.")
+        
+        return macode
+        
