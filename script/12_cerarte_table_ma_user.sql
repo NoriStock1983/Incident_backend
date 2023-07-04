@@ -1,6 +1,7 @@
 CREATE TABLE MA_USER(
     id serial primary key,
     usercd varchar(8) NOT NULL,
+    password varchar(50) NOT NULL,
     user_f_name varchar(50) NOT NULL,
     user_l_name varchar(50) NOT NULL,
     belonged_company_id integer NOT NULL,
